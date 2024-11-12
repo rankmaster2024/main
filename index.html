@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Coming Soon</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      max-width: 600px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #2d8f74;
+    }
+    p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+    .subscribe {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .subscribe input {
+      padding: 10px;
+      width: 200px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+    .subscribe button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #2d8f74;
+      color: white;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .subscribe button:hover {
+      background-color: #1f6f53;
+    }
+    footer {
+      font-size: 14px;
+      color: #888;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 28px;
+      }
+      p {
+        font-size: 16px;
+      }
+      .subscribe input {
+        width: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Our Platform is Coming Soon!</h1>
+    <p>We're working hard to bring you a powerful tool to manage your school or college. Stay tuned for more updates!</p>
+    
+    <div class="subscribe">
+      <input type="email" placeholder="Enter your email" id="email" required>
+      <button onclick="subscribe()">Notify Me</button>
+    </div>
+    
+    <footer>© 2024 Your School Management Platform</footer>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDsXECMDb6tGR5_uUXP71tfW2fkrb7QoWY",
+      authDomain: "rankmaster-2024.firebaseapp.com",
+      projectId: "rankmaster-2024",
+      storageBucket: "rankmaster-2024.appspot.com",
+      messagingSenderId: "713867895802",
+      appId: "1:713867895802:web:69d025be69e85b8bb1ba43",
+      measurementId: "G-ZPX1TJ8Y9F"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+
+    // Function to subscribe and store email in Firestore
+    async function subscribe() {
+      const email = document.getElementById('email').value;
+      
+      if (email) {
+        try {
+          // Add the email to the "subscribers" collection in Firestore
+          await addDoc(collection(db, "subscribers"), {
+            email: email,
+            timestamp: new Date()
+          });
+
+          // Alert to notify the user
+          alert('Thanks for subscribing! We will notify you once we are live.');
+        } catch (e) {
+          console.error("Error adding document: ", e);
+          alert('Something went wrong, please try again.');
+        }
+      } else {
+        alert('Please enter a valid email address.');
+      }
+    }
+  </script>
+</body>
+</html>
+
+
